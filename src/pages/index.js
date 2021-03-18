@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import WelcomeHeader from '../components/WelcomeHeader';
 import { Heading } from '@codeday/topo/Atom/Text';
-import { IndexSitesFromRoleQuery, IndexUserQuery } from './index.gql'
+import { IndexUserQuery } from './index.gql'
 import Divider from '@codeday/topo/Atom/Divider';
 import merge from 'deepmerge';
 import UserProperties from '../components/UserProperties';
@@ -17,7 +17,7 @@ import jwt from 'jsonwebtoken';
 import Link from '@codeday/topo/Atom/Text/Link';
 import { getSession } from 'next-auth/client';
 import { signIn } from 'next-auth/client';
-import { codedayTheme as theme, useColorMode } from "@codeday/topo/Theme"
+import { useColorMode } from "@codeday/topo/Theme"
 
 const { serverRuntimeConfig } = getConfig();
 
