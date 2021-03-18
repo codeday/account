@@ -21,14 +21,14 @@ import { codedayTheme as theme, useColorMode } from "@codeday/topo/Theme"
 
 const { serverRuntimeConfig } = getConfig();
 
-export default function Home({ user, token, logIn }) {
+export default function Home({ user, token, logIn, ...props }) {
 
   if (logIn) return <Page><Button onClick={() => signIn('auth0')}>Sign in to CodeDay</Button></Page>
   const { colorMode, toggleColorMode } = useColorMode()
   const [changes, setChanges] = useState({});
   const router = useRouter();
   const onSubmit = () => {
-    router.replace(router.asPath);
+    router.replace(router.asPath, router.asPath, { scroll: false });
     setChanges({})
   }
   // @ts-ignore
@@ -76,7 +76,7 @@ export async function getServerSideProps({ req }) {
   let { result, error } = await tryAuthenticatedApiQuery(IndexUserQuery, {}, token);
   console.log(error)
   if (error) return { props: {} }
-  
+
   return {
     props: {
       user: result?.account?.getUser || null,
