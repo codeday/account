@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import WelcomeHeader from '../components/WelcomeHeader';
 import { Heading } from '@codeday/topo/Atom/Text';
-import { IndexSitesFromRoleQuery, IndexUserQuery } from './index.gql'
+import { IndexUserQuery } from './index.gql'
 import Divider from '@codeday/topo/Atom/Divider';
 import merge from 'deepmerge';
 import UserProperties from '../components/UserProperties';
@@ -17,18 +17,18 @@ import jwt from 'jsonwebtoken';
 import Link from '@codeday/topo/Atom/Text/Link';
 import { getSession } from 'next-auth/client';
 import { signIn } from 'next-auth/client';
-import { codedayTheme as theme, useColorMode } from "@codeday/topo/Theme"
+import { useColorMode } from "@codeday/topo/Theme"
 
 const { serverRuntimeConfig } = getConfig();
 
-export default function Home({ user, token, logIn }) {
+export default function Home({ user, token, logIn, ...props }) {
 
   if (logIn) return <Page><Button onClick={() => signIn('auth0')}>Sign in to CodeDay</Button></Page>
   const { colorMode, toggleColorMode } = useColorMode()
   const [changes, setChanges] = useState({});
   const router = useRouter();
   const onSubmit = () => {
-    router.replace(router.asPath);
+    router.replace(router.asPath, router.asPath, { scroll: false });
     setChanges({})
   }
   // @ts-ignore
@@ -76,7 +76,7 @@ export async function getServerSideProps({ req }) {
   let { result, error } = await tryAuthenticatedApiQuery(IndexUserQuery, {}, token);
   console.log(error)
   if (error) return { props: {} }
-  
+
   return {
     props: {
       user: result?.account?.getUser || null,

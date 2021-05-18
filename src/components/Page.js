@@ -34,7 +34,7 @@ const Page = ({ children, isLoggedIn }) => {
                 bold
               >
                 Account
-                </Text>
+              </Text>
             </a>
           </SiteLogo>
           <Menu>
